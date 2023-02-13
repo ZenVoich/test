@@ -1,7 +1,7 @@
 # Motoko Testing
 Easy way to write tests in Motoko and run them with `mops test`.
 
-Library supports the Mops Message Format v1.
+The library supports [Mops Message Format v1.0](https://github.com/ZenVoich/mops-message-format#v10).
 
 ## Install
 ```
@@ -80,13 +80,3 @@ await suite("my async test suite", func(): async () {
 	});
 });
 ```
-
-
-## Mops Message Format v1
-Supported labels:
-
-`mops:1:start`
-
-`mops:1:end`
-
-`mops:1:skip`
