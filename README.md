@@ -62,7 +62,7 @@ test("this test will run", func() {
 ```
 
 ## Async tests
-If there are `await`'s in your tests, use functions from `mo:test/async`.
+If there are `await`s in your tests, use functions from `mo:test/async`.
 
 ```motoko
 import {test; suite} "mo:test/async";
