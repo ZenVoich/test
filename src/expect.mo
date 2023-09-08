@@ -29,10 +29,10 @@ module {
 
 	public func fail(actual : Text, condition : Text, reference : Text) {
 		// let prefix = "\1b[31m·\1b[0m";
-		// let prefix = "\1b[31m•\1b[0m";
 		// let prefix = "\1b[31m⚠\1b[0m";
-		let prefix = "\1b[31m⌇\1b[0m";
+		// let prefix = "\1b[31m⌇\1b[0m";
 		// let prefix = "\1b[31m!\1b[0m";
+		let prefix = "\1b[31m•\1b[0m";
 		var msg = "\n" # prefix # " expected \1b[31m" # actual # "\1b[0m ";
 		if (condition != "") {
 			msg #= "\n" # prefix # " \1b[30m" # condition # "\1b[0m";
@@ -58,6 +58,13 @@ module {
 		isFalse : () -> ();
 		equal : Bool -> ();
 		notEqual : Bool -> ();
+	};
+
+	type ExpectOption<T> = {
+		isNull : () -> ();
+		// isFalse : () -> ();
+		// equal : Bool -> ();
+		// notEqual : Bool -> ();
 	};
 
 	// type ExpectFloat = {
@@ -134,59 +141,31 @@ module {
 				};
 			};
 		};
-		nat = func(a : Nat) : ExpectNum<Nat> {
-			makeExpectNum<Nat.Nat>({
-				equal = Nat.equal;
-				notEqual = Nat.notEqual;
-				less = Nat.less;
-				lessOrEqual = Nat.lessOrEqual;
-				greater = Nat.greater;
-				greaterOrEqual = Nat.greaterOrEqual;
-				toText = Nat.toText;
-			})(a);
-		};
-		nat8 = func(a : Nat8) : ExpectNum<Nat8> {
-			makeExpectNum<Nat8.Nat8>({
-				equal = Nat8.equal;
-				notEqual = Nat8.notEqual;
-				less = Nat8.less;
-				lessOrEqual = Nat8.lessOrEqual;
-				greater = Nat8.greater;
-				greaterOrEqual = Nat8.greaterOrEqual;
-				toText = Nat8.toText;
-			})(a);
-		};
-		nat16 = func(a : Nat16) : ExpectNum<Nat16> {
-			makeExpectNum<Nat16.Nat16>({
-				equal = Nat16.equal;
-				notEqual = Nat16.notEqual;
-				less = Nat16.less;
-				lessOrEqual = Nat16.lessOrEqual;
-				greater = Nat16.greater;
-				greaterOrEqual = Nat16.greaterOrEqual;
-				toText = Nat16.toText;
-			})(a);
-		};
-		nat32 = func(a : Nat32) : ExpectNum<Nat32> {
-			makeExpectNum<Nat32.Nat32>({
-				equal = Nat32.equal;
-				notEqual = Nat32.notEqual;
-				less = Nat32.less;
-				lessOrEqual = Nat32.lessOrEqual;
-				greater = Nat32.greater;
-				greaterOrEqual = Nat32.greaterOrEqual;
-				toText = Nat32.toText;
-			})(a);
-		};
-		nat64 = func(a : Nat64) : ExpectNum<Nat64> {
-			makeExpectNum<Nat64.Nat64>({
-				equal = Nat64.equal;
-				notEqual = Nat64.notEqual;
-				less = Nat64.less;
-				lessOrEqual = Nat64.lessOrEqual;
-				greater = Nat64.greater;
-				greaterOrEqual = Nat64.greaterOrEqual;
-				toText = Nat64.toText;
+		// option = func<T>(a : ?T) : ExpectOption<T> {
+		// 	return {
+		// 		isNull = func() {
+		// 			switch (a) {
+		// 				case (?v) {
+		// 					// ERROR: show is not defined for operand type Any
+		// 					fail(debug_show(v), "to be ==", "null");
+		// 				};
+		// 				case (null) {};
+		// 			};
+		// 			// if (a != null) {
+		// 			// 	fail(debug_show(a), "to be ==", "null");
+		// 			// };
+		// 		};
+		// 	};
+		// };
+		num = func(a : Int) : ExpectNum<Int> {
+			makeExpectNum<Int.Int>({
+				equal = Int.equal;
+				notEqual = Int.notEqual;
+				less = Int.less;
+				lessOrEqual = Int.lessOrEqual;
+				greater = Int.greater;
+				greaterOrEqual = Int.greaterOrEqual;
+				toText = Int.toText;
 			})(a);
 		};
 		int = func(a : Int) : ExpectNum<Int> {
@@ -244,6 +223,61 @@ module {
 				toText = Int64.toText;
 			})(a);
 		};
+		nat = func(a : Nat) : ExpectNum<Nat> {
+			makeExpectNum<Nat.Nat>({
+				equal = Nat.equal;
+				notEqual = Nat.notEqual;
+				less = Nat.less;
+				lessOrEqual = Nat.lessOrEqual;
+				greater = Nat.greater;
+				greaterOrEqual = Nat.greaterOrEqual;
+				toText = Nat.toText;
+			})(a);
+		};
+		nat8 = func(a : Nat8) : ExpectNum<Nat8> {
+			makeExpectNum<Nat8.Nat8>({
+				equal = Nat8.equal;
+				notEqual = Nat8.notEqual;
+				less = Nat8.less;
+				lessOrEqual = Nat8.lessOrEqual;
+				greater = Nat8.greater;
+				greaterOrEqual = Nat8.greaterOrEqual;
+				toText = Nat8.toText;
+			})(a);
+		};
+		nat16 = func(a : Nat16) : ExpectNum<Nat16> {
+			makeExpectNum<Nat16.Nat16>({
+				equal = Nat16.equal;
+				notEqual = Nat16.notEqual;
+				less = Nat16.less;
+				lessOrEqual = Nat16.lessOrEqual;
+				greater = Nat16.greater;
+				greaterOrEqual = Nat16.greaterOrEqual;
+				toText = Nat16.toText;
+			})(a);
+		};
+		nat32 = func(a : Nat32) : ExpectNum<Nat32> {
+			makeExpectNum<Nat32.Nat32>({
+				equal = Nat32.equal;
+				notEqual = Nat32.notEqual;
+				less = Nat32.less;
+				lessOrEqual = Nat32.lessOrEqual;
+				greater = Nat32.greater;
+				greaterOrEqual = Nat32.greaterOrEqual;
+				toText = Nat32.toText;
+			})(a);
+		};
+		nat64 = func(a : Nat64) : ExpectNum<Nat64> {
+			makeExpectNum<Nat64.Nat64>({
+				equal = Nat64.equal;
+				notEqual = Nat64.notEqual;
+				less = Nat64.less;
+				lessOrEqual = Nat64.lessOrEqual;
+				greater = Nat64.greater;
+				greaterOrEqual = Nat64.greaterOrEqual;
+				toText = Nat64.toText;
+			})(a);
+		};
 		// float = func(val : Float) : ExpectFloat {
 		// 	func equalWithin(b : Float, epsilon : Float) : Bool {
 		// 		Float.equalWithin(val, b, epsilon);
@@ -282,7 +316,7 @@ module {
 				endsWith = bindCompare<Text>(val, func(a : Text, b) = Text.endsWith(a, #text b), func(a) = a);
 			};
 		};
-		array = func<T>(ar : [T], itemToText : (T) -> Text) : {has : (T, (T, T) -> Bool) -> ()} {
+		array = func<T>(ar : [T], itemToText : (T) -> Text) : { has : (T, (T, T) -> Bool) -> () } {
 			func arrayToText(ar : [T]) : Text {
 				var text = "[";
 				label l do {
@@ -307,55 +341,6 @@ module {
 					let has = Array.find<T>(ar, func b = equal(a, b));
 					if (Option.isNull(has)) {
 						fail(arrayToText(ar), "to have item", itemToText(a));
-					};
-				};
-			};
-		};
-		iter = func<T>(iter : Iter.Iter<T>, itemToText : (T) -> Text) : {has : (T, (T, T) -> Bool) -> ()} {
-			func iterToText(iter : Iter.Iter<T>) : Text {
-				var text = "";
-				let iterCopy = Iter.map<T, T>(iter, func(x) = x);
-				var i = 0;
-
-				label l while (true) {
-					let ?item = iterCopy.next() else break l;
-
-					if (i != 0) {
-						text #= ", ";
-					};
-					text #= itemToText(item);
-					i += 1;
-
-					if (text.size() > 100) {
-						break l;
-					};
-				};
-
-				if (Option.isNull(iterCopy.next())) {
-					text #= "...";
-				};
-
-				return text;
-			};
-
-			func iterFind<T>(iter : Iter.Iter<T>, predicate : (T) -> Bool) : ?T {
-				let iterCopy = Iter.map<T, T>(iter, func(x) = x);
-
-				label l while (true) {
-					let ?item = iterCopy.next() else return null;
-					if (predicate(item)) {
-						return ?item;
-					};
-				};
-
-				return null;
-			};
-
-			return {
-				has = func(a : T, equal : (T, T) -> Bool) {
-					let has = iterFind<T>(iter, func b = equal(a, b));
-					if (Option.isNull(has)) {
-						fail(iterToText(iter), "to have item", itemToText(a));
 					};
 				};
 			};
