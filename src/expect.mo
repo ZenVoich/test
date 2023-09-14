@@ -27,7 +27,7 @@ module {
 		};
 	};
 
-	public func fail(actual : Text, condition : Text, reference : Text) {
+	public func fail1(actual : Text, condition : Text, reference : Text) {
 		// let prefix = "\1b[31m·\1b[0m";
 		// let prefix = "\1b[31m⚠\1b[0m";
 		// let prefix = "\1b[31m⌇\1b[0m";
@@ -44,6 +44,23 @@ module {
 
 		Debug.trap(msg);
 	};
+
+
+	public func fail2(actual : Text, condition : Text, reference : Text) {
+		let prefix = "\1b[31m•\1b[0m";
+		var msg = "\n" # prefix # " received          \1b[31m" # actual # "\1b[0m ";
+		if (condition != "") {
+			msg #= "\n" # prefix # " expected" # " \1b[30m" # condition # "\1b[0m";
+		}
+		else {
+			msg #= prefix # "";
+		};
+		msg #= " " # reference # "";
+
+		Debug.trap(msg);
+	};
+
+	public let fail = fail1;
 
 	public func makeCompare<T>(comp : (T, T) -> Bool, toText : (T) -> Text) : (T, T) -> () {
 		return func(a : T, b : T) = compare<T>(a, b, comp, toText, "==");
@@ -319,14 +336,14 @@ module {
 				endsWith = bindCompare<Text>(val, func(a : Text, b) = Text.endsWith(a, #text b), func(a) = a);
 			};
 		};
-		array = func<T>(ar : [T], itemToText : (T) -> Text) : { has : (T, (T, T) -> Bool) -> () } {
-			func arrayToText(ar : [T]) : Text {
+		array = class<T>(arr : [T], itemToText : (T) -> Text, itemEqual : (T, T) -> Bool) {
+			func _arrayToText(arr : [T]) : Text {
 				var text = "[";
 				label l do {
-					for (i in ar.keys()) {
-						text #= itemToText(ar[i]);
+					for (i in arr.keys()) {
+						text #= itemToText(arr[i]);
 
-						if (i + 1 < ar.size()) {
+						if (i + 1 < arr.size()) {
 							if (text.size() > 100) {
 								text #= "...";
 								break l;
@@ -339,12 +356,29 @@ module {
 				return text;
 			};
 
-			return {
-				has = func(a : T, equal : (T, T) -> Bool) {
-					let has = Array.find<T>(ar, func b = equal(a, b));
-					if (Option.isNull(has)) {
-						fail(arrayToText(ar), "to have item", itemToText(a));
-					};
+			public func equal(other : [T]) {
+				if (not Array.equal<T>(arr, other, itemEqual)) {
+					fail(_arrayToText(arr), "to be ==", _arrayToText(other));
+				};
+			};
+
+			public func notEqual(other : [T]) {
+				if (Array.equal<T>(arr, other, itemEqual)) {
+					fail(_arrayToText(arr), "to be ==", _arrayToText(other));
+				};
+			};
+
+			public func has(a : T) {
+				let has = Array.find<T>(arr, func b = itemEqual(a, b));
+				if (Option.isNull(has)) {
+					fail(_arrayToText(arr), "to have item", itemToText(a));
+				};
+			};
+
+			public func notHas(a : T) {
+				let has = Array.find<T>(arr, func b = itemEqual(a, b));
+				if (Option.isSome(has)) {
+					fail(_arrayToText(arr), "to have item", itemToText(a));
 				};
 			};
 		};
