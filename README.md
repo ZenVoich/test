@@ -21,11 +21,11 @@ Run `mops test` to run tests.
 import {test} "mo:test";
 
 test("simple test", func() {
-	assert true;
+    assert true;
 });
 
 test("test my number", func() {
-	assert 1 > 0;
+    assert 1 > 0;
 });
 ```
 
@@ -36,13 +36,13 @@ Use `suite` to group your tests.
 import {test; suite} "mo:test";
 
 suite("my test suite", func() {
-	test("simple test", func() {
-		assert true;
-	});
+    test("simple test", func() {
+        assert true;
+    });
 
-	test("test my number", func() {
-		assert 1 > 0;
-	});
+    test("test my number", func() {
+        assert 1 > 0;
+    });
 });
 ```
 
@@ -53,11 +53,11 @@ Use `skip` to skip tests.
 import {test; skip} "mo:test";
 
 skip("this test will never run", func() {
-	assert false;
+    assert false;
 });
 
 test("this test will run", func() {
-	assert true;
+    assert true;
 });
 ```
 
@@ -67,16 +67,16 @@ If there are `await`s in your tests, use functions from `mo:test/async`.
 ```motoko
 import {test; suite} "mo:test/async";
 
-await suite("my async test suite", func(): async () {
-	await test("async test", func(): async () {
-		let res = await myAsyncFn();
-		assert Result.isOk(res);
-	});
+await suite("my async test suite", func() : async () {
+    await test("async test", func() : async () {
+        let res = await myAsyncFn();
+        assert Result.isOk(res);
+    });
 
-	test("should generate unique values", func(): async () {
-		let a = await generate();
-		let b = await generate();
-		assert a != b;
-	});
+    test("should generate unique values", func() : async () {
+        let a = await generate();
+        let b = await generate();
+        assert a != b;
+    });
 });
 ```
