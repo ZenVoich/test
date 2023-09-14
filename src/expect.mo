@@ -141,22 +141,25 @@ module {
 				};
 			};
 		};
-		// option = func<T>(a : ?T) : ExpectOption<T> {
-		// 	return {
-		// 		isNull = func() {
-		// 			switch (a) {
-		// 				case (?v) {
-		// 					// ERROR: show is not defined for operand type Any
-		// 					fail(debug_show(v), "to be ==", "null");
-		// 				};
-		// 				case (null) {};
-		// 			};
-		// 			// if (a != null) {
-		// 			// 	fail(debug_show(a), "to be ==", "null");
-		// 			// };
-		// 		};
-		// 	};
-		// };
+		option = class<T>(a : ?T, toText : (T) -> Text) {
+			public func isNull() {
+				switch (a) {
+					case (?v) {
+						fail("?" # toText(v), "to be ==", "null");
+					};
+					case (null) {};
+				};
+			};
+
+			public func isSome() {
+				switch (a) {
+					case (?v) {};
+					case (null) {
+						fail("null", "to be !=", "null");
+					};
+				};
+			};
+		};
 		num = func(a : Int) : ExpectNum<Int> {
 			makeExpectNum<Int.Int>({
 				equal = Int.equal;
