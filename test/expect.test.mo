@@ -1,7 +1,7 @@
 import Debug "mo:base/Debug";
 import Nat "mo:base/Nat";
-import {expect; compare; makeCompare; fail} "../src/expect";
-import {test; suite} "../src";
+import Blob "mo:base/Blob";
+import {test; suite; expect; fail} "../src";
 
 test("bool", func() {
 	expect.bool(true).isTrue();
@@ -12,20 +12,45 @@ test("bool", func() {
 });
 
 test("option", func() {
-	expect.option<Nat>(null, Nat.toText).isNull();
-	expect.option<Nat>(?1, Nat.toText).isSome();
+	expect.option<Nat>(null, Nat.toText, Nat.equal).isNull();
+	expect.option<Nat>(?1, Nat.toText, Nat.equal).isSome();
+	expect.option<Nat>(?2, Nat.toText, Nat.equal).equal(?2);
+	expect.option<Nat>(?3, Nat.toText, Nat.equal).notEqual(?44);
+	expect.option<Nat>(?3, Nat.toText, Nat.equal).notEqual(null);
+	expect.option<Nat>(null, Nat.toText, Nat.equal).equal(null);
+});
+
+test("char", func() {
+	expect.char('a').equal('a');
+	expect.char('a').notEqual('A');
+});
+
+test("text", func() {
+	expect.text("hello motoko").endsWith("motoko");
+	expect.text("hello motoko").contains("mot");
 });
 
 test("nat", func() {
 	let myNat = 33;
 	expect.nat(myNat).notEqual(22);
 	expect.nat(myNat).equal(33);
-	expect.bool(true).isTrue();
-	expect.bool(false).isFalse();
-	expect.bool(true).equal(true);
-	expect.bool(false).equal(false);
-	expect.bool(true).notEqual(false);
 	expect.nat(myNat).less(66);
+});
+
+test("nat", func() {
+	let myNat : Nat = 22;
+	let myNat8 : Nat8 = 33;
+	let myInt : Int = -44;
+	let myFloat : Float = 1.313;
+	expect.int(myNat).equal(22);
+	expect.nat8(myNat8).equal(33);
+	expect.nat(myNat).equal(22);
+	expect.nat(myNat).less(66);
+
+	expect.int(myNat).notEqual(221);
+	expect.nat8(myNat8).notEqual(331);
+	expect.nat(myNat).notEqual(221);
+	expect.nat8(myNat8).lessOrEqual(33);
 });
 
 test("array has", func() {
@@ -34,6 +59,7 @@ test("array has", func() {
 	exAr.has(6);
 	exAr.has(1);
 	exAr.has(0);
+	exAr.notHas(21);
 });
 
 test("array equal", func() {
@@ -41,6 +67,11 @@ test("array equal", func() {
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,2,4]);
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,3,4,5]);
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,3]);
+});
+
+test("blob", func() {
+	expect.blob(Blob.fromArray([1,2,3,4])).equal(Blob.fromArray([1,2,3,4]));
+	// expect.blob(Blob.fromArray([1,2,3,4])).notEqual(Blob.fromArray([1,2,3,4]));
 });
 
 test("expect custom", func() {
@@ -59,7 +90,10 @@ test("expect custom", func() {
 		};
 
 		public func greater(b : Custom) {
-			makeCompare<Custom>(func(a, b) = a.x > b.x and a.y > b.y, show)(a, b);
+			let ok = a.x > b.x and a.y > b.y;
+			if (not ok) {
+				fail(show(a), ">=", show(b));
+			};
 		};
 	};
 
