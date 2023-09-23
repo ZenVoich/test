@@ -1,6 +1,7 @@
 import Debug "mo:base/Debug";
 import Nat "mo:base/Nat";
 import Blob "mo:base/Blob";
+import Principal "mo:base/Principal";
 import {test; suite; expect; fail} "../src";
 
 test("bool", func() {
@@ -37,7 +38,7 @@ test("nat", func() {
 	expect.nat(myNat).less(66);
 });
 
-test("nat", func() {
+test("intX, natX", func() {
 	let myNat : Nat = 22;
 	let myNat8 : Nat8 = 33;
 	let myInt : Int = -44;
@@ -48,6 +49,7 @@ test("nat", func() {
 	expect.nat(myNat).less(66);
 
 	expect.int(myNat).notEqual(221);
+	expect.int64(123123123123).notEqual(1231231231232);
 	expect.nat8(myNat8).notEqual(331);
 	expect.nat(myNat).notEqual(221);
 	expect.nat8(myNat8).lessOrEqual(33);
@@ -72,6 +74,12 @@ test("array equal", func() {
 test("blob", func() {
 	expect.blob(Blob.fromArray([1,2,3,4])).equal(Blob.fromArray([1,2,3,4]));
 	// expect.blob(Blob.fromArray([1,2,3,4])).notEqual(Blob.fromArray([1,2,3,4]));
+});
+
+test("principal", func() {
+	expect.principal(Principal.fromBlob(Blob.fromArray([1,2,3,4]))).equal(Principal.fromBlob(Blob.fromArray([1,2,3,4])));
+	expect.principal(Principal.fromBlob("\04")).isAnonymous();
+	expect.principal(Principal.fromBlob(Blob.fromArray([4]))).isAnonymous();
 });
 
 test("expect custom", func() {

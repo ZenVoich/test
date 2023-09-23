@@ -6,7 +6,7 @@ import {bindCompare} "./utils";
 
 module {
 	public class ExpectBlob<T>(val : Blob) {
-		func show(v : Blob) : Text = "" # debug_show(v) # "";
+		func show(v : Blob) : Text = "blob \"" # debug_show(v) # "\"";
 
 		public let equal = bindCompare<Blob>(val, Blob.equal, show, "");
 		public let notEqual = bindCompare<Blob>(val, Blob.notEqual, show, "!=");

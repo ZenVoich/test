@@ -27,6 +27,7 @@ import ExpectBool "./expect-bool";
 import ExpectArray "./expect-array";
 import ExpectBlob "./expect-blob";
 import ExpectOption "./expect-option";
+import ExpectPrincipal "./expect-principal";
 
 module {
 	public let expect = {
@@ -46,6 +47,7 @@ module {
 		text = ExpectText.ExpectText;
 		array = ExpectArray.ExpectArray;
 		blob = ExpectBlob.ExpectBlob;
+		principal = ExpectPrincipal.ExpectPrincipal;
 	};
 
 	public let fail = _fail;
