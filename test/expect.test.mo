@@ -64,6 +64,10 @@ test("array has", func() {
 	exAr.notHas(21);
 });
 
+test("array size", func() {
+	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).size(11);
+});
+
 test("array equal", func() {
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).equal([1,2,3,4]);
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,2,4]);

@@ -26,13 +26,13 @@ import ExpectText "./expect-text";
 import ExpectBool "./expect-bool";
 import ExpectArray "./expect-array";
 import ExpectBlob "./expect-blob";
-import ExpectOption "./expect-option";
 import ExpectPrincipal "./expect-principal";
+import ExpectOption "./expect-option";
+import ExpectRes "./expect-res";
 
 module {
 	public let expect = {
 		bool = ExpectBool.ExpectBool;
-		option = ExpectOption.ExpectOption;
 		int = ExpectInt.ExpectInt;
 		int8 = func(val : Int8) : ExpectInt.ExpectInt = ExpectInt.ExpectInt(Int8.toInt(val));
 		int16 = func(val : Int16) : ExpectInt.ExpectInt = ExpectInt.ExpectInt(Int16.toInt(val));
@@ -48,6 +48,8 @@ module {
 		array = ExpectArray.ExpectArray;
 		blob = ExpectBlob.ExpectBlob;
 		principal = ExpectPrincipal.ExpectPrincipal;
+		option = ExpectOption.ExpectOption;
+		res = ExpectRes.ExpectRes;
 	};
 
 	public let fail = _fail;
