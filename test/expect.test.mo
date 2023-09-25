@@ -2,6 +2,7 @@ import Debug "mo:base/Debug";
 import Nat "mo:base/Nat";
 import Blob "mo:base/Blob";
 import Principal "mo:base/Principal";
+import Result "mo:base/Result";
 import {test; suite; expect; fail} "../src";
 
 test("bool", func() {
@@ -65,7 +66,7 @@ test("array has", func() {
 });
 
 test("array size", func() {
-	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).size(11);
+	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).size(10);
 });
 
 test("array equal", func() {
@@ -84,6 +85,36 @@ test("principal", func() {
 	expect.principal(Principal.fromBlob(Blob.fromArray([1,2,3,4]))).equal(Principal.fromBlob(Blob.fromArray([1,2,3,4])));
 	expect.principal(Principal.fromBlob("\04")).isAnonymous();
 	expect.principal(Principal.fromBlob(Blob.fromArray([4]))).isAnonymous();
+});
+
+test("result", func() {
+	type MyRes = Result.Result<Nat, Text>;
+	let ok : MyRes = #ok(22);
+	let err : MyRes = #err("error");
+
+	let expectOk = expect.res<Nat, Text>(ok, func(a) = debug_show(a), func(a, b) = a == b);
+	let expectErr = expect.res<Nat, Text>(err, func(a) = debug_show(a), func(a, b) = a == b);
+
+	expectOk.isOk();
+	expectOk.equal(#ok(22));
+
+	expectErr.isErr();
+	expectErr.equal(#err("error"));
+});
+
+test("result opt ok", func() {
+	type MyRes = Result.Result<?Nat, Text>;
+	let ok : MyRes = #ok(?22);
+	let err : MyRes = #err("error");
+
+	let expectOk = expect.res<?Nat, Text>(ok, func(a) = debug_show(a), func(a, b) = a == b);
+	let expectErr = expect.res<?Nat, Text>(err, func(a) = debug_show(a), func(a, b) = a == b);
+
+	expectOk.isOk();
+	expectOk.equal(#ok(?22));
+
+	expectErr.isErr();
+	expectErr.equal(#err("error"));
 });
 
 test("expect custom", func() {
