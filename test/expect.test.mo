@@ -3,6 +3,7 @@ import Nat "mo:base/Nat";
 import Blob "mo:base/Blob";
 import Principal "mo:base/Principal";
 import Result "mo:base/Result";
+import Error "mo:base/Error";
 import {test; suite; expect; fail} "../src";
 
 test("bool", func() {
@@ -92,8 +93,8 @@ test("result", func() {
 	let ok : MyRes = #ok(22);
 	let err : MyRes = #err("error");
 
-	let expectOk = expect.res<Nat, Text>(ok, func(a) = debug_show(a), func(a, b) = a == b);
-	let expectErr = expect.res<Nat, Text>(err, func(a) = debug_show(a), func(a, b) = a == b);
+	let expectOk = expect.result<Nat, Text>(ok, func(a) = debug_show(a), func(a, b) = a == b);
+	let expectErr = expect.result<Nat, Text>(err, func(a) = debug_show(a), func(a, b) = a == b);
 
 	expectOk.isOk();
 	expectOk.equal(#ok(22));
@@ -107,8 +108,8 @@ test("result opt ok", func() {
 	let ok : MyRes = #ok(?22);
 	let err : MyRes = #err("error");
 
-	let expectOk = expect.res<?Nat, Text>(ok, func(a) = debug_show(a), func(a, b) = a == b);
-	let expectErr = expect.res<?Nat, Text>(err, func(a) = debug_show(a), func(a, b) = a == b);
+	let expectOk = expect.result<?Nat, Text>(ok, func(a) = debug_show(a), func(a, b) = a == b);
+	let expectErr = expect.result<?Nat, Text>(err, func(a) = debug_show(a), func(a, b) = a == b);
 
 	expectOk.isOk();
 	expectOk.equal(#ok(?22));
@@ -143,3 +144,8 @@ test("expect custom", func() {
 	expectCustom({x = 1; y = 3}).equal({x = 1; y = 3});
 	expectCustom({x = 2; y = 4}).greater({x = 1; y = 3});
 });
+
+// test throw error
+await expect.call(func() : async() {
+	throw Error.reject("error");
+}).reject();

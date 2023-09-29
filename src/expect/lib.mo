@@ -29,6 +29,7 @@ import ExpectBlob "./expect-blob";
 import ExpectPrincipal "./expect-principal";
 import ExpectOption "./expect-option";
 import ExpectResult "./expect-result";
+import ExpectCall "./expect-call";
 
 module {
 	public let expect = {
@@ -49,7 +50,8 @@ module {
 		blob = ExpectBlob.ExpectBlob;
 		principal = ExpectPrincipal.ExpectPrincipal;
 		option = ExpectOption.ExpectOption;
-		res = ExpectResult.ExpectResult;
+		result = ExpectResult.ExpectResult;
+		call = ExpectCall.ExpectCall;
 	};
 
 	public let fail = _fail;
