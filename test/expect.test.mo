@@ -44,6 +44,7 @@ test("intX, natX", func() {
 	let myNat : Nat = 22;
 	let myNat8 : Nat8 = 33;
 	let myInt : Int = -44;
+	let myInt8 : Int8 = -44;
 	let myFloat : Float = 1.313;
 	expect.int(myNat).equal(22);
 	expect.nat8(myNat8).equal(33);
@@ -51,8 +52,9 @@ test("intX, natX", func() {
 	expect.nat(myNat).less(66);
 
 	expect.int(myNat).notEqual(221);
+	expect.int8(myInt8).equal(myInt8);
 	expect.int64(123123123123).notEqual(1231231231232);
-	expect.nat8(myNat8).notEqual(331);
+	expect.nat8(myNat8).notEqual(32);
 	expect.nat(myNat).notEqual(221);
 	expect.nat8(myNat8).lessOrEqual(33);
 });
