@@ -80,3 +80,155 @@ await suite("my async test suite", func() : async () {
     });
 });
 ```
+
+# Expect
+
+```motoko
+import {test; expect} "mo:test";
+```
+
+Expect consists of a number of "matchers" that let you validate different things.
+
+Compared to `assert`, in case of fail `expect` shows you the details of the values.
+
+For example `assert`:
+```motoko
+assert myNat == 1;
+// execution error, assertion failure
+```
+We only know that `myNat` is not equal to `1`, but what is the actual value of `myNat`?
+To know this, we have to add a new line `Debug.print(debug_show(myNat))`.
+
+but with `expect`:
+```motoko
+expect.nat(myNat).equal(1);
+// execution error, explicit trap:
+// ! received 22
+// ! expected 1
+```
+here we see the actual value of `myNat`
+
+
+## `expect.nat` (nat8, nat16, nat32, nat64, int, int8, int16, int32, int64)
+
+```motoko
+import {test; expect} "mo:test";
+
+expect.nat(x).equal(10); // x == 10
+expect.nat(x).notEqual(10); // x != 10
+expect.nat(x).less(10); // x < 10
+expect.nat(x).lessOrEqual(10); // x <= 10
+expect.nat(x).greater(10); // x > 10
+expect.nat(x).greaterOrEqual(10); // x >= 10
+
+expect.int(x).equal(10); // x == 10 (Int)
+expect.int64(x).equal(10); // x == 10 (Int64)
+expect.nat32(x).equal(10); // x == 10 (Nat32)
+```
+
+## `expect.char`
+
+```motoko
+expect.char(c).equal('a'); // c == 'a'
+expect.char(c).notEqual('a'); // c != 'a'
+expect.char(c).less('a'); // c < 'a'
+expect.char(c).lessOrEqual('a'); // c <= 'a'
+expect.char(c).greater('a'); // c > 'a'
+expect.char(c).greaterOrEqual('a'); // c >= 'a'
+```
+
+## `expect.text`
+
+```motoko
+expect.text(foo).equal("bar"); // foo == "bar"
+expect.text(foo).notEqual("bar"); // foo != "bar"
+expect.text(foo).contains("bar"); // Text.contains(foo, #text("bar"))
+expect.text(foo).startsWith("bar"); // Text.startsWith(foo, #text("bar"))
+expect.text(foo).endsWith("bar"); // Text.endsWith(foo, #text("bar"))"
+
+expect.text(foo).less("bar"); // foo < "bar"
+expect.text(foo).lessOrEqual("bar"); // foo <= "bar"
+expect.text(foo).greater("bar"); // foo > "bar"
+expect.text(foo).greaterOrEqual("bar"); // foo >= "bar"
+```
+
+## `expect.option`
+
+```motoko
+// optional Nat
+let optNat = ?10;
+expect.option(optNat, Nat.toText, Nat.equal).equal(?10); // optNat == ?10
+expect.option(optNat, Nat.toText, Nat.equal).notEqual(?25); // optNat != ?25
+expect.option(optNat, Nat.toText, Nat.equal).isNull(); // optNat == null
+
+
+// optional custom type
+type MyType = {
+    x : Nat;
+    y : Nat;
+};
+
+func showMyType(a : MyType) : Text {
+    debug_show(a);
+};
+
+func equalMyType(a : MyType, b : MyType) : Bool {
+    a.x == b.x and a.y == b.y
+};
+
+let val = ?{x = 1; y = 2};
+
+expect.option(v, showMyType, equalMyType).notEqual(null);
+expect.option(v, showMyType, equalMyType).isSome(null);
+expect.option(v, showMyType, equalMyType).equal(?{x = 1; y = 2});
+```
+
+## `expect.result`
+
+```motoko
+type MyRes = Result.Result<Nat, Text>;
+
+func show(a) = debug_show(a);
+func equal(a, b) = a == b
+
+let ok : MyRes = #ok(22);
+let err : MyRes = #err("error");
+
+expect.result<Nat, Text>(ok, show, equal).isOk();
+expect.result<Nat, Text>(ok, show, equal).equal(#ok(22));
+
+expect.result<Nat, Text>(err, show, equal).isErr();
+expect.result<Nat, Text>(err, show, equal).equal(#err("error"));
+expect.result<Nat, Text>(err, show, equal).equal(#err("other error"));
+```
+
+## `expect.principal`
+
+```motoko
+expect.principal(id).isAnonymous(); // Principal.isAnonymous(id)
+expect.principal(id).notAnonymous(); // not Principal.isAnonymous(id)
+
+expect.principal(id).equal(id2); // id == id2
+expect.principal(id).notEqual(id2); // id != id2
+
+expect.principal(id).less(id2); // id < id2
+expect.principal(id).lessOrEqual(id2); // id <= id2
+expect.principal(id).greater(id2); // id > id2
+expect.principal(id).greaterOrEqual(id2); // id >= id2
+```
+
+## `expect.bool`
+```motoko
+```
+
+## `expect.array`
+```motoko
+```
+
+## `expect.blob`
+```motoko
+```
+
+## `expect.call`
+```motoko
+```

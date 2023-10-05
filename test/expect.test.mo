@@ -15,12 +15,31 @@ test("bool", func() {
 });
 
 test("option", func() {
-	expect.option<Nat>(null, Nat.toText, Nat.equal).isNull();
-	expect.option<Nat>(?1, Nat.toText, Nat.equal).isSome();
-	expect.option<Nat>(?2, Nat.toText, Nat.equal).equal(?2);
-	expect.option<Nat>(?3, Nat.toText, Nat.equal).notEqual(?44);
-	expect.option<Nat>(?3, Nat.toText, Nat.equal).notEqual(null);
-	expect.option<Nat>(null, Nat.toText, Nat.equal).equal(null);
+	expect.option(null, Nat.toText, Nat.equal).isNull();
+	expect.option(?1, Nat.toText, Nat.equal).isSome();
+	expect.option(?2, Nat.toText, Nat.equal).equal(?2);
+	expect.option(?3, Nat.toText, Nat.equal).notEqual(?44);
+	expect.option(?3, Nat.toText, Nat.equal).notEqual(null);
+	expect.option(null, Nat.toText, Nat.equal).equal(null);
+});
+
+test("option custom type", func() {
+	type MyType = {
+		x : Nat;
+		y : Nat;
+	};
+	let v = ?{x = 1; y = 2};
+
+	func showMyType(a : MyType) : Text {
+		debug_show(a);
+	};
+
+	func equalMyType(a : MyType, b : MyType) : Bool {
+		a.x == b.x and a.y == b.y
+	};
+
+	expect.option(v, showMyType, equalMyType).notEqual(null);
+	expect.option(v, showMyType, equalMyType).equal(?{x = 1; y = 2});
 });
 
 test("char", func() {
@@ -103,6 +122,7 @@ test("result", func() {
 
 	expectErr.isErr();
 	expectErr.equal(#err("error"));
+	expectErr.notEqual(#err("other error"));
 });
 
 test("result opt ok", func() {

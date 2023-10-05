@@ -20,5 +20,11 @@ module {
 				fail(toText(val), "", toText(other));
 			};
 		};
+
+		public func notEqual(other : Result.Result<Ok, Err>) {
+			if (equalFn(val, other)) {
+				fail(toText(val), "!=", toText(other));
+			};
+		};
 	};
 };

@@ -19,5 +19,10 @@ module {
 				fail(show(val), "", show(Principal.fromBlob("\04")));
 			};
 		};
+		public func notAnonymous() {
+			if (Principal.isAnonymous(val)) {
+				fail(show(val), "!=", show(Principal.fromBlob("\04")));
+			};
+		};
 	};
 };
