@@ -78,13 +78,15 @@ test("intX, natX", func() {
 	expect.nat8(myNat8).lessOrEqual(33);
 });
 
-test("array has", func() {
-	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).has(6);
+test("array contains", func() {
+	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).contains(6);
 	let exAr = expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal);
-	exAr.has(6);
-	exAr.has(1);
-	exAr.has(0);
-	exAr.notHas(21);
+	exAr.contains(6);
+	exAr.contains(1);
+	exAr.contains(0);
+	exAr.notContains(88);
+	exAr.notContains(21);
+	exAr.size(10);
 });
 
 test("array size", func() {
@@ -100,7 +102,8 @@ test("array equal", func() {
 
 test("blob", func() {
 	expect.blob(Blob.fromArray([1,2,3,4])).equal(Blob.fromArray([1,2,3,4]));
-	// expect.blob(Blob.fromArray([1,2,3,4])).notEqual(Blob.fromArray([1,2,3,4]));
+	expect.blob(Blob.fromArray([1,2,3,4])).notEqual(Blob.fromArray([2,2,3,4]));
+	expect.blob(Blob.fromArray([1,2,3,4])).size(4);
 });
 
 test("principal", func() {
@@ -168,6 +171,8 @@ test("expect custom", func() {
 });
 
 // test throw error
-await expect.call(func() : async() {
+func myFunc() : async () {
 	throw Error.reject("error");
-}).reject();
+};
+
+await expect.call(myFunc).reject();

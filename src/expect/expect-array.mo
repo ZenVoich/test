@@ -36,17 +36,17 @@ module {
 			};
 		};
 
-		public func has(a : T) {
+		public func contains(a : T) {
 			let has = Array.find<T>(arr, func b = itemEqual(a, b));
 			if (Option.isNull(has)) {
-				fail(_arrayToText(arr, 100), "to have item", itemToText(a));
+				fail(_arrayToText(arr, 100), "to contain element", itemToText(a));
 			};
 		};
 
-		public func notHas(a : T) {
+		public func notContains(a : T) {
 			let has = Array.find<T>(arr, func b = itemEqual(a, b));
 			if (Option.isSome(has)) {
-				fail(_arrayToText(arr, 100), "to not have item", itemToText(a));
+				fail(_arrayToText(arr, 100), "to not contain element", itemToText(a));
 			};
 		};
 

@@ -179,7 +179,7 @@ func equalMyType(a : MyType, b : MyType) : Bool {
 let val = ?{x = 1; y = 2};
 
 expect.option(v, showMyType, equalMyType).notEqual(null);
-expect.option(v, showMyType, equalMyType).isSome(null);
+expect.option(v, showMyType, equalMyType).isSome(); // != null
 expect.option(v, showMyType, equalMyType).equal(?{x = 1; y = 2});
 ```
 
@@ -219,16 +219,48 @@ expect.principal(id).greaterOrEqual(id2); // id >= id2
 
 ## `expect.bool`
 ```motoko
+expect.bool(x).isTrue(); // a == true
+expect.bool(x).isFalse(); // a == false
+expect.bool(x).equal(b); // a == b
+expect.bool(x).notEqual(b); // a != b
 ```
 
 ## `expect.array`
 ```motoko
+expect.array([1,2,3], Nat.toText, Nat.equal).equal([1,2,3]);
+expect.array([1,2,3], Nat.toText, Nat.equal).notEqual([1,2]);
+
+expect.array([1,2,3], Nat.toText, Nat.equal).contains(3); // array contains element 3
+expect.array([1,2,3], Nat.toText, Nat.equal).notContains(10); // array does not contain element 10
+
+expect.array([1,2,3,4], Nat.toText, Nat.equal).size(4);
 ```
 
 ## `expect.blob`
 ```motoko
+expect.blob(blob).size(4); // blob.size() == 4
+expect.blob(blob).equal(blob2); // blob == blob2
+expect.blob(blob).notEqual(blob2); // blob != blob2
+
+expect.blob(blob).less(blob2); // blob < blob2
+expect.blob(blob).lessOrEqual(blob2); // blob <= blob2
+expect.blob(blob).greater(blob2); // blob > blob2
+expect.blob(blob).greaterOrEqual(blob2); // blob >= blob2
 ```
 
 ## `expect.call`
+
+_Does not catch traps._
+
 ```motoko
+func myFunc() : async () {
+    throw Error.reject("error");
+};
+
+func noop() : async () {
+    // do not throw an error
+};
+
+await expect.call(myFunc).reject(); // ok
+await expect.call(noop).reject(); // fail
 ```
