@@ -1,0 +1,67 @@
+import Debug "mo:base/Debug";
+import Nat "mo:base/Nat";
+import Nat8 "mo:base/Nat8";
+import Nat16 "mo:base/Nat16";
+import Nat32 "mo:base/Nat32";
+import Nat64 "mo:base/Nat64";
+import Int "mo:base/Int";
+import Int8 "mo:base/Int8";
+import Int16 "mo:base/Int16";
+import Int32 "mo:base/Int32";
+import Int64 "mo:base/Int64";
+import Float "mo:base/Float";
+import Char "mo:base/Char";
+import Text "mo:base/Text";
+import TrieMap "mo:base/TrieMap";
+import Hash "mo:base/Hash";
+import Array "mo:base/Array";
+import Option "mo:base/Option";
+import Bool "mo:base/Bool";
+import Iter "mo:base/Iter";
+
+import {bindCompare; fail = _fail} "./utils";
+import ExpectInt "./expect-int";
+import ExpectInt8 "./expect-int8";
+import ExpectInt16 "./expect-int16";
+import ExpectInt32 "./expect-int32";
+import ExpectInt64 "./expect-int64";
+import ExpectNat "./expect-nat";
+import ExpectNat8 "./expect-nat8";
+import ExpectNat16 "./expect-nat16";
+import ExpectNat32 "./expect-nat32";
+import ExpectNat64 "./expect-nat64";
+import ExpectChar "./expect-char";
+import ExpectText "./expect-text";
+import ExpectBool "./expect-bool";
+import ExpectArray "./expect-array";
+import ExpectBlob "./expect-blob";
+import ExpectPrincipal "./expect-principal";
+import ExpectOption "./expect-option";
+import ExpectResult "./expect-result";
+import ExpectCall "./expect-call";
+
+module {
+	public let expect = {
+		bool = ExpectBool.ExpectBool;
+		int = ExpectInt.ExpectInt;
+		int8 = ExpectInt8.ExpectInt8;
+		int16 = ExpectInt16.ExpectInt16;
+		int32 = ExpectInt32.ExpectInt32;
+		int64 = ExpectInt64.ExpectInt64;
+		nat = ExpectNat.ExpectNat;
+		nat8 = ExpectNat8.ExpectNat8;
+		nat16 = ExpectNat16.ExpectNat16;
+		nat32 = ExpectNat32.ExpectNat32;
+		nat64 = ExpectNat64.ExpectNat64;
+		char = ExpectChar.ExpectChar;
+		text = ExpectText.ExpectText;
+		array = ExpectArray.ExpectArray;
+		blob = ExpectBlob.ExpectBlob;
+		principal = ExpectPrincipal.ExpectPrincipal;
+		option = ExpectOption.ExpectOption;
+		result = ExpectResult.ExpectResult;
+		call = ExpectCall.ExpectCall;
+	};
+
+	public let fail = _fail;
+};
