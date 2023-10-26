@@ -44,15 +44,15 @@ module {
 	public let expect = {
 		bool = ExpectBool.ExpectBool;
 		int = ExpectInt.ExpectInt;
-		int8 = func(val : Int8) : ExpectInt8.ExpectInt8 = ExpectInt8.ExpectInt8(val);
-		int16 = func(val : Int16) : ExpectInt16.ExpectInt16 = ExpectInt16.ExpectInt16(val);
-		int32 = func(val : Int32) : ExpectInt32.ExpectInt32 = ExpectInt32.ExpectInt32(val);
-		int64 = func(val : Int64) : ExpectInt64.ExpectInt64 = ExpectInt64.ExpectInt64(val);
-		nat = func(val : Nat) : ExpectNat.ExpectNat = ExpectNat.ExpectNat(val);
-		nat8 = func(val : Nat8) : ExpectNat8.ExpectNat8 = ExpectNat8.ExpectNat8(val);
-		nat16 = func(val : Nat16) : ExpectNat16.ExpectNat16 = ExpectNat16.ExpectNat16(val);
-		nat32 = func(val : Nat32) : ExpectNat32.ExpectNat32 = ExpectNat32.ExpectNat32(val);
-		nat64 = func(val : Nat64) : ExpectNat64.ExpectNat64 = ExpectNat64.ExpectNat64(val);
+		int8 = ExpectInt8.ExpectInt8;
+		int16 = ExpectInt16.ExpectInt16;
+		int32 = ExpectInt32.ExpectInt32;
+		int64 = ExpectInt64.ExpectInt64;
+		nat = ExpectNat.ExpectNat;
+		nat8 = ExpectNat8.ExpectNat8;
+		nat16 = ExpectNat16.ExpectNat16;
+		nat32 = ExpectNat32.ExpectNat32;
+		nat64 = ExpectNat64.ExpectNat64;
 		char = ExpectChar.ExpectChar;
 		text = ExpectText.ExpectText;
 		array = ExpectArray.ExpectArray;

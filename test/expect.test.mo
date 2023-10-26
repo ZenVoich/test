@@ -108,6 +108,7 @@ test("blob", func() {
 
 test("principal", func() {
 	expect.principal(Principal.fromBlob(Blob.fromArray([1,2,3,4]))).equal(Principal.fromBlob(Blob.fromArray([1,2,3,4])));
+	expect.principal(Principal.fromBlob(Blob.fromArray([1,2,3,4]))).notEqual(Principal.fromBlob(Blob.fromArray([1,2,3,5])));
 	expect.principal(Principal.fromBlob("\04")).isAnonymous();
 	expect.principal(Principal.fromBlob(Blob.fromArray([4]))).isAnonymous();
 });
