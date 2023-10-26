@@ -3,6 +3,13 @@ Easy way to write tests in Motoko and run them with `mops test`.
 
 The library supports [Mops Message Format v1.0](https://github.com/ZenVoich/mops-message-format#v10).
 
+## Features
+- [Simple tests](#simple-test)
+- [Test suites](#test-suites)
+- [Skip tests](#skip-test)
+- [Async tests](#async-tests)
+- [Expect](#expect)
+
 ## Install
 ```
 mops add test --dev
