@@ -185,9 +185,9 @@ func equalMyType(a : MyType, b : MyType) : Bool {
 
 let val = ?{x = 1; y = 2};
 
-expect.option(v, showMyType, equalMyType).notEqual(null);
-expect.option(v, showMyType, equalMyType).isSome(); // != null
-expect.option(v, showMyType, equalMyType).equal(?{x = 1; y = 2});
+expect.option(val, showMyType, equalMyType).notEqual(null);
+expect.option(val, showMyType, equalMyType).isSome(); // != null
+expect.option(val, showMyType, equalMyType).equal(?{x = 1; y = 2});
 ```
 
 ## `expect.result`
