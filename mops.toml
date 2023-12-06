@@ -7,4 +7,4 @@ keywords = [ "test", "testing", "unit", "suite", "expect", "matchers", "mops" ]
 license = "MIT"
 
 [dependencies]
-base = "0.10.0"
+base = "0.10.2"
