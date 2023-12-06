@@ -1,5 +1,6 @@
 import Debug "mo:base/Debug";
 import {expect = _expect; fail = _fail} "./expect";
+import {expectAsync = _expectAsync} "./expect/async";
 
 module {
 	public func test(name : Text, fn : () -> async ()) : async () {
@@ -16,6 +17,9 @@ module {
 		Debug.print("mops:1:skip " # name);
 	};
 
-	public let expect = _expect;
+	public let expect = {
+		_expect with
+		call = _expectAsync.call;
+	};
 	public let fail = _fail;
 };

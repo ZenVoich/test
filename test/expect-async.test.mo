@@ -4,10 +4,9 @@ import Blob "mo:base/Blob";
 import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import Error "mo:base/Error";
-import {test; suite; fail} "../src";
-import {expect} "../src/async";
+import {test; suite; expect; fail} "../src/async";
 
-test("bool", func() {
+await test("bool", func() : async () {
 	expect.bool(true).isTrue();
 	expect.bool(false).isFalse();
 	expect.bool(true).equal(true);
@@ -15,7 +14,7 @@ test("bool", func() {
 	expect.bool(true).notEqual(false);
 });
 
-test("option", func() {
+await test("option", func() : async () {
 	expect.option(null, Nat.toText, Nat.equal).isNull();
 	expect.option(?1, Nat.toText, Nat.equal).isSome();
 	expect.option(?2, Nat.toText, Nat.equal).equal(?2);
@@ -24,7 +23,7 @@ test("option", func() {
 	expect.option(null, Nat.toText, Nat.equal).equal(null);
 });
 
-test("option custom type", func() {
+await test("option custom type", func() : async () {
 	type MyType = {
 		x : Nat;
 		y : Nat;
@@ -43,24 +42,24 @@ test("option custom type", func() {
 	expect.option(v, showMyType, equalMyType).equal(?{x = 1; y = 2});
 });
 
-test("char", func() {
+await test("char", func() : async () {
 	expect.char('a').equal('a');
 	expect.char('a').notEqual('A');
 });
 
-test("text", func() {
+await test("text", func() : async () {
 	expect.text("hello motoko").endsWith("motoko");
 	expect.text("hello motoko").contains("mot");
 });
 
-test("nat", func() {
+await test("nat", func() : async () {
 	let myNat = 33;
 	expect.nat(myNat).notEqual(22);
 	expect.nat(myNat).equal(33);
 	expect.nat(myNat).less(66);
 });
 
-test("intX, natX", func() {
+await test("intX, natX", func() : async () {
 	let myNat : Nat = 22;
 	let myNat8 : Nat8 = 33;
 	let myInt : Int = -44;
@@ -79,7 +78,7 @@ test("intX, natX", func() {
 	expect.nat8(myNat8).lessOrEqual(33);
 });
 
-test("array contains", func() {
+await test("array contains", func() : async () {
 	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).contains(6);
 	let exAr = expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal);
 	exAr.contains(6);
@@ -90,31 +89,31 @@ test("array contains", func() {
 	exAr.size(10);
 });
 
-test("array size", func() {
+await test("array size", func() : async () {
 	expect.array([1,2,3,4,5,6,7,8,9,0], Nat.toText, Nat.equal).size(10);
 });
 
-test("array equal", func() {
+await test("array equal", func() : async () {
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).equal([1,2,3,4]);
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,2,4]);
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,3,4,5]);
 	expect.array([1,2,3,4], Nat.toText, Nat.equal).notEqual([1,2,3]);
 });
 
-test("blob", func() {
+await test("blob", func() : async () {
 	expect.blob(Blob.fromArray([1,2,3,4])).equal(Blob.fromArray([1,2,3,4]));
 	expect.blob(Blob.fromArray([1,2,3,4])).notEqual(Blob.fromArray([2,2,3,4]));
 	expect.blob(Blob.fromArray([1,2,3,4])).size(4);
 });
 
-test("principal", func() {
+await test("principal", func() : async () {
 	expect.principal(Principal.fromBlob(Blob.fromArray([1,2,3,4]))).equal(Principal.fromBlob(Blob.fromArray([1,2,3,4])));
 	expect.principal(Principal.fromBlob(Blob.fromArray([1,2,3,4]))).notEqual(Principal.fromBlob(Blob.fromArray([1,2,3,5])));
 	expect.principal(Principal.fromBlob("\04")).isAnonymous();
 	expect.principal(Principal.fromBlob(Blob.fromArray([4]))).isAnonymous();
 });
 
-test("result", func() {
+await test("result", func() : async () {
 	type MyRes = Result.Result<Nat, Text>;
 	let ok : MyRes = #ok(22);
 	let err : MyRes = #err("error");
@@ -130,7 +129,7 @@ test("result", func() {
 	expectErr.notEqual(#err("other error"));
 });
 
-test("result opt ok", func() {
+await test("result opt ok", func() : async () {
 	type MyRes = Result.Result<?Nat, Text>;
 	let ok : MyRes = #ok(?22);
 	let err : MyRes = #err("error");
@@ -145,7 +144,7 @@ test("result opt ok", func() {
 	expectErr.equal(#err("error"));
 });
 
-test("expect custom", func() {
+await test("expect custom", func() : async () {
 	type Custom = {
 		x : Nat;
 		y : Nat;
@@ -172,9 +171,11 @@ test("expect custom", func() {
 	expectCustom({x = 2; y = 4}).greater({x = 1; y = 3});
 });
 
-// test throw error
-func myFunc() : async () {
-	throw Error.reject("error");
-};
+await test("expectAsync.call", func() : async () {
+	// test throw error
+	func myFunc() : async () {
+		throw Error.reject("error");
+	};
 
-await expect.call(myFunc).reject();
+	await expect.call(myFunc).reject();
+});

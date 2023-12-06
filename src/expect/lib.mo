@@ -1,24 +1,3 @@
-import Debug "mo:base/Debug";
-import Nat "mo:base/Nat";
-import Nat8 "mo:base/Nat8";
-import Nat16 "mo:base/Nat16";
-import Nat32 "mo:base/Nat32";
-import Nat64 "mo:base/Nat64";
-import Int "mo:base/Int";
-import Int8 "mo:base/Int8";
-import Int16 "mo:base/Int16";
-import Int32 "mo:base/Int32";
-import Int64 "mo:base/Int64";
-import Float "mo:base/Float";
-import Char "mo:base/Char";
-import Text "mo:base/Text";
-import TrieMap "mo:base/TrieMap";
-import Hash "mo:base/Hash";
-import Array "mo:base/Array";
-import Option "mo:base/Option";
-import Bool "mo:base/Bool";
-import Iter "mo:base/Iter";
-
 import {bindCompare; fail = _fail} "./utils";
 import ExpectInt "./expect-int";
 import ExpectInt8 "./expect-int8";
@@ -38,7 +17,6 @@ import ExpectBlob "./expect-blob";
 import ExpectPrincipal "./expect-principal";
 import ExpectOption "./expect-option";
 import ExpectResult "./expect-result";
-import ExpectCall "./expect-call";
 
 module {
 	public let expect = {
@@ -60,7 +38,6 @@ module {
 		principal = ExpectPrincipal.ExpectPrincipal;
 		option = ExpectOption.ExpectOption;
 		result = ExpectResult.ExpectResult;
-		call = ExpectCall.ExpectCall;
 	};
 
 	public let fail = _fail;
