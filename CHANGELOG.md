@@ -2,7 +2,7 @@
 
 - Fixed test run in `wasi` mode
 
-### Breaking changes:
+**Breaking changes**:
 - `expect.call` now only available when imported from `mo:test/async`
 
 ## 1.1.0
