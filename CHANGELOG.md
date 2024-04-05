@@ -1,6 +1,6 @@
 ## 2.0.0
 
-- Requires `moc` version `0.11.0` or higher.
+- **BREAKING CHANGE**: Requires `moc` version `0.11.0` or higher.
 - Added `testsys` function to run tests with `system` capability. (by @skilesare)
 
 Example:
