@@ -1,3 +1,15 @@
+## 2.0.0
+
+- Requires `moc` version `0.11.0` or higher.
+- Added `testsys` function to run tests with `system` capability. (by @skilesare)
+
+Example:
+```motoko
+testsys<system>("test", func<system>() {
+  myFunc<system>();
+});
+```
+
 ## 1.2.0
 
 - Fixed test run in `wasi` mode

@@ -12,16 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      - name: install moc
-        run: npx mocv use latest
-
-      - name: install mops
-        run: npm i ic-mops -g
+          node-version: 20
+      - uses: ZenVoich/setup-mops@v1
 
       - name: install mops packages
         run: mops install

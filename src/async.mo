@@ -9,11 +9,17 @@ module {
 		Debug.print("mops:1:end " # name);
 	};
 
+	public func testsys<system>(name : Text, fn : <system>() -> async ()) : async () {
+		Debug.print("mops:1:start " # name);
+		await fn<system>();
+		Debug.print("mops:1:end " # name);
+	};
+
 	public func suite(name : Text, fn : () -> async ()) : async () {
 		await test(name, fn);
 	};
 
-	public func skip(name : Text, fn : () -> async ()) : async () {
+	public func skip(name : Text, _fn : () -> async ()) : async () {
 		Debug.print("mops:1:skip " # name);
 	};
 

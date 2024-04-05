@@ -18,7 +18,7 @@ module {
 		test(name, fn);
 	};
 
-	public func skip(name : Text, fn : () -> ()) {
+	public func skip(name : Text, _fn : () -> ()) {
 		Debug.print("mops:1:skip " # name);
 	};
 

@@ -88,6 +88,17 @@ await suite("my async test suite", func() : async () {
 });
 ```
 
+## Tests with `<system>` capability
+Use `testsys` to run tests with `system` capability.
+
+```motoko
+import {testsys} "mo:test";
+
+testsys<system>("test", func<system>() {
+    myFunc<system>();
+});
+```
+
 # Expect
 
 ```motoko

@@ -7,4 +7,11 @@ keywords = [ "test", "testing", "unit", "suite", "expect", "matchers", "mops" ]
 license = "MIT"
 
 [dependencies]
-base = "0.10.2"
+base = "0.11.1"
+
+[toolchain]
+moc = "0.11.1"
+wasmtime = "19.0.0"
+
+[requirements]
+moc = "0.11.0"
