@@ -8,6 +8,12 @@ module {
 		Debug.print("mops:1:end " # name);
 	};
 
+	public func testsys<system>(name : Text, fn : <system>() -> ()) {
+		Debug.print("mops:1:start " # name);
+		fn<system>();
+		Debug.print("mops:1:end " # name);
+	};
+
 	public func suite(name : Text, fn : () -> ()) {
 		test(name, fn);
 	};
