@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Fixed formatting of test names containing `\n`
+
 ## 2.0.0
 
 - **BREAKING CHANGE**: Requires `moc` version `0.11.0` or higher.
