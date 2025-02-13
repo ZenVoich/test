@@ -8,8 +8,8 @@ The library uses [Mops Message Format v1.0](https://github.com/ZenVoich/mops-mes
 - [Test suites](#test-suites)
 - [Skip tests](#skip-test)
 - [Async tests](#async-tests)
-- [Expect](#expect)
 - [Replica tests](#replica-tests)
+- [Expect](#expect)
 
 ## Install
 ```
