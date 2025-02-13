@@ -1,7 +1,7 @@
 # Motoko Testing
-Easy way to write tests in Motoko and run them with `mops test`.
+Easy way to write tests in Motoko and run them with [`mops test`](https://docs.mops.one/cli/mops-test).
 
-The library supports [Mops Message Format v1.0](https://github.com/ZenVoich/mops-message-format#v10).
+The library uses [Mops Message Format v1.0](https://github.com/ZenVoich/mops-message-format#v10).
 
 ## Features
 - [Simple tests](#simple-test)
@@ -9,6 +9,7 @@ The library supports [Mops Message Format v1.0](https://github.com/ZenVoich/mops
 - [Skip tests](#skip-test)
 - [Async tests](#async-tests)
 - [Expect](#expect)
+- [Replica tests](#replica-tests)
 
 ## Install
 ```
@@ -98,6 +99,53 @@ testsys<system>("test", func<system>() {
     myFunc<system>();
 });
 ```
+
+## Replica tests
+
+Replica tests are useful if you need to test actor code which relies on the IC API(cycles, timers, canister upgrades, etc.).
+
+To run replica tests, your test file should look like this:
+```motoko
+...
+
+actor {
+  public func runTests() : async () {
+    // your tests here
+  };
+};
+```
+
+Example:
+```motoko
+import {test} "mo:test/async";
+import MyCanister "../my-canister";
+
+actor {
+  // add cycles to deploy your canister
+  ExperimentalCycles.add<system>(1_000_000_000_000);
+
+  // deploy your canister
+  let myCanister = await MyCanister.MyCanister();
+
+  public func runTests() : async () {
+    await test("test name", func() : async () {
+      let res = await myCanister.myFunc();
+      assert res == 123;
+    });
+  };
+};
+```
+
+Make sure your actor doesn't have a name `actor {`.
+
+Make sure your actor has `runTests` method.
+
+See example [here](https://github.com/ZenVoich/mops/blob/main/test/storage-actor.test.mo).
+
+Under the hood, Mops will:
+- Start a local replica on port `4945`
+- Compile test files and deploy them
+- Call `runTests` method of the deployed canister
 
 # Expect
 
