@@ -1,4 +1,4 @@
-## 2.0.1
+## 2.1.0
 
 - Fixed formatting of test names containing `\n`
 
