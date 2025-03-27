@@ -1,4 +1,4 @@
-import {bindCompare; fail = _fail} "./utils";
+import {fail = _fail} "./utils";
 import ExpectCall "./expect-call";
 
 module {

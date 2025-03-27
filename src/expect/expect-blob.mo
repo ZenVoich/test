@@ -1,7 +1,4 @@
 import Blob "mo:base/Blob";
-import Array "mo:base/Array";
-import Option "mo:base/Option";
-import Debug "mo:base/Debug";
 import {bindCompare; fail} "./utils";
 
 module {

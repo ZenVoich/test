@@ -1,11 +1,8 @@
 import Debug "mo:base/Debug";
 import Error "mo:base/Error";
-import {bindCompare} "./utils";
 
 module {
 	public class ExpectCall(fn : () -> async ()) {
-		func show(t : Text) : Text = "\"" # t # "\"";
-
 		public func reject() : async () {
 			try {
 				await fn();

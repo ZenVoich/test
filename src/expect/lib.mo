@@ -1,4 +1,4 @@
-import {bindCompare; fail = _fail} "./utils";
+import {fail = _fail} "./utils";
 import ExpectInt "./expect-int";
 import ExpectInt8 "./expect-int8";
 import ExpectInt16 "./expect-int16";
