@@ -1,3 +1,7 @@
+## 2.1.1
+
+- Increase `expect.array` stringify limit from 100 to 20_000 chars
+
 ## 2.1.0
 
 - Fixed formatting of test names containing `\n`
