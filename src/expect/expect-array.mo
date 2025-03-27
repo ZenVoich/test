@@ -1,9 +1,10 @@
 import Array "mo:base/Array";
 import Option "mo:base/Option";
-import Debug "mo:base/Debug";
 import {fail} "./utils";
 
 module {
+	let STRING_LIMIT = 20_000;
+
 	public class ExpectArray<T>(arr : [T], itemToText : (T) -> Text, itemEqual : (T, T) -> Bool) {
 		func _arrayToText(arr : [T], limit : Nat) : Text {
 			var text = "[";
@@ -26,27 +27,27 @@ module {
 
 		public func equal(other : [T]) {
 			if (not Array.equal<T>(arr, other, itemEqual)) {
-				fail(_arrayToText(arr, 100), "", _arrayToText(other, 100));
+				fail(_arrayToText(arr, STRING_LIMIT), "", _arrayToText(other, STRING_LIMIT));
 			};
 		};
 
 		public func notEqual(other : [T]) {
 			if (Array.equal<T>(arr, other, itemEqual)) {
-				fail(_arrayToText(arr, 100), "", _arrayToText(other, 100));
+				fail(_arrayToText(arr, STRING_LIMIT), "", _arrayToText(other, STRING_LIMIT));
 			};
 		};
 
 		public func contains(a : T) {
 			let has = Array.find<T>(arr, func b = itemEqual(a, b));
 			if (Option.isNull(has)) {
-				fail(_arrayToText(arr, 100), "to contain element", itemToText(a));
+				fail(_arrayToText(arr, STRING_LIMIT), "to contain element", itemToText(a));
 			};
 		};
 
 		public func notContains(a : T) {
 			let has = Array.find<T>(arr, func b = itemEqual(a, b));
 			if (Option.isSome(has)) {
-				fail(_arrayToText(arr, 100), "to not contain element", itemToText(a));
+				fail(_arrayToText(arr, STRING_LIMIT), "to not contain element", itemToText(a));
 			};
 		};
 
